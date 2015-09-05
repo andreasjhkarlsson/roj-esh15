@@ -133,9 +133,12 @@ function resetStationMenu() {
 }
 
 
-$(".stations").on('click','li', function () {
-    // Now the div itself as an object is $(this)
+$(".stations").on('mouseenter','li', function () {
     var menuItemId = $(this).get(0).id - 1;
 
     stations[menuItemId].marker.setAnimation(google.maps.Animation.BOUNCE);
-});
+}).on('mouseleave', 'li', function () {
+    var menuItemId = $(this).get(0).id - 1;
+
+    stations[menuItemId].marker.setAnimation(google.maps.Animation.NULLs);
+    });
