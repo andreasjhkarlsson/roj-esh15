@@ -8,7 +8,7 @@ function drawChart(smhiData) {
     var snowList = [];
     for (x in smhiData.timeseries) {
         if (dayList[dayList.length-1] - dayList[0] > 5) {
-            new Chartist.Line('#chart1', {
+            new Chartist.Bar('#chart1', {
                 labels: dayList,
                 series: [snowList]
             });
@@ -17,8 +17,8 @@ function drawChart(smhiData) {
         var date = smhiData.timeseries[x].validTime;
         //Ta ut datum för dagarna
         var day = (date.substr(8, 2));
-        //Ta ut värdet från snöprognosen
-        var snow = smhiData.timeseries[x].pis;
+        //Ta ut värdet från snöprognosen (Ändra från t till pis för snönederbörd)
+        var snow = smhiData.timeseries[x].t;
 
         dayList.push(day);
         snowList.push(snow);
