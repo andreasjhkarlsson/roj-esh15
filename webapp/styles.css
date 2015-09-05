@@ -30,3 +30,12 @@ header, main, footer {
     height: 100%;
 }
 
+.top-li:hover {
+     background-color: #fff;
+}
+
+.collapsible-body li:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+
