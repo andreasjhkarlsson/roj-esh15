@@ -6,6 +6,8 @@
     <link type="text/css" rel="stylesheet" href="bower_components/materialize/dist/css/materialize.min.css"  media="screen,projection"/>
     <title>Röj</title>
     <link rel="stylesheet" href="styles.css"/>
+    <link rel="stylesheet" href="bower_components/chartist/dist/chartist.min.css">
+</head>
 </head>
 <body>
 
@@ -39,10 +41,10 @@
         <div id="map"></div>
     </div>
 
-    <div class="col s12 m12 l12 blue lighten-3 z-depth-2" id="main">
-        <div id="map"></div>
+    <div class="col s12 m12 l12 blue lighten-3 z-depth-2" id="chart">
+        <div class="ct-chart ct-golden-section" id="chart1"></div>
+        </div>
     </div>
-
 
 </div>
 
@@ -52,6 +54,10 @@
 <script type="text/javascript" src="bower_components/materialize/bin/materialize.js"></script>
 <!--Kartscript-->
 <script type="text/javascript" src="kartscript.js"></script>
+<!--Chartkomponenter-->
+<script type="text/javascript" src="bower_components/chartist/dist/chartist.min.js"></script>
+<!--Chartscript-->
+<script type="text/javascript" src="chartscript.js"></script>
 <!--API KEY AIzaSyDS5YnG1YBvFm3daqWd5d0Fc8GqXfiqkd0-->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
 
