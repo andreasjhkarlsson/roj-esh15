@@ -50,7 +50,7 @@ function createInfoWindow(station){
         '</div>'+
         '<p>Station: ' + station.name + '</p>' +
         '<p>Snödjup: ' + station.depth + ' mm</p>' +
-        '<p>Traffik: ' + station.traffic + ' fordon/h</p>' +
+        '<p>Trafik: ' + station.traffic + ' fordon/h</p>' +
         '</div>'+
         '</div>';
     return new google.maps.InfoWindow({
