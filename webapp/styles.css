@@ -1,4 +1,14 @@
 
 html, body { height: 100%; margin: 0; padding: 0; }
 
-#map { height: 100%; }
+#map
+{
+    width: 600px;
+    height: 450px;
+    margin: 0 auto;
+}
+
+.row {
+    margin-top: 1%;
+    height: 100%;
+}
