@@ -28,8 +28,7 @@ app.get(apiPath("all"), function (req, res) {
         var station = {
             id: row.ID,
             name: row.NAME,
-            lat: row.LAT,
-            long: row.LONG 
+            pos: {lat: row.LAT, lng: row.LONG}
             
         };
         
