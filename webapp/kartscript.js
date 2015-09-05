@@ -4,43 +4,57 @@
 
 //http://localhost:63342/webapp/index.html
 
-var linkopingstationer = {
-    malmslatt: {
-        pos: {lat: 58.407728, lng: 15.599847},
-        address: 'Malmslättsvägen',
-        traffic: 100,
-        depth: 10
-    },
-    universitetsvägen: {
-        pos: {lat: 58.397790, lng: 15.571051},
-        address: 'Universitetsvägen',
-        traffic: 20,
-        depth: 15
-    },
-    drottninggatan: {
-        pos: {lat: 58.409207, lng: 15.628723},
-        address: 'Drottninggatan',
-        traffic: 90,
-        depth: 7
-    },
-    industrigatan: {
-        pos: {lat: 58.415945, lng: 15.587524},
-        address: 'Industrigatan',
-        traffic: 75,
-        depth: 2
-    },
-    djurgardsgatan: {
-        pos: {lat: 58.400447, lng: 15.609149},
-        address: 'Djurgårdsgatan',
-        traffic: 50,
-        depth: 24
-    }
-};
 
+
+
+//var linkopingstationer = {
+//    malmslatt: {
+//        pos: {lat: 58.407728, lng: 15.599847},
+//        address: 'Malmslättsvägen',
+//        traffic: 100,
+//        depth: 10
+//    },
+//    universitetsvägen: {
+//        pos: {lat: 58.397790, lng: 15.571051},
+//        address: 'Universitetsvägen',
+//        traffic: 20,
+//        depth: 15
+//    },
+//    drottninggatan: {
+//        pos: {lat: 58.409207, lng: 15.628723},
+//        address: 'Drottninggatan',
+//        traffic: 90,
+//        depth: 7
+//    },
+//    industrigatan: {
+//        pos: {lat: 58.415945, lng: 15.587524},
+//        address: 'Industrigatan',
+//        traffic: 75,
+//        depth: 2
+//    },
+//    djurgardsgatan: {
+//        pos: {lat: 58.400447, lng: 15.609149},
+//        address: 'Djurgårdsgatan',
+//        traffic: 50,
+//        depth: 24
+//    }
+//};
+
+var stations;
 var map;
 var image = 'images/snowstick_sne_64px.png';
 
+
+
 function initMap() {
+
+    $.get( "/api/all", function(teststations) {
+        stations = teststations;
+        for(i = 0; i < stations.length; i++){
+            alert(stations[i].name);
+        }
+    });
+
     // Create map, zoom  and center on default station
     map = new google.maps.Map(document.getElementById('map'), {
         center: linkopingstationer.malmslatt.pos,
