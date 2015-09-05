@@ -18,7 +18,7 @@ function apiPath(endpoint) {
 }
 
 app.get(apiPath("all"), function (req, res) {
-    console.log("test!");
+    console.log("/all");
     
     
     var result = [];
@@ -28,8 +28,8 @@ app.get(apiPath("all"), function (req, res) {
         var station = {
             id: row.ID,
             name: row.NAME,
-            gps_x: row.GPSX,
-            gps_y: row.GPSY 
+            lat: row.LAT,
+            long: row.LONG 
             
         };
         
