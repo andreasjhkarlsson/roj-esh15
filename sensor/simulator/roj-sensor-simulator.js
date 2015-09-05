@@ -11,7 +11,7 @@ var port = parseInt(process.argv[process.argv.length-1]);
 
 var s1 = 0.0 // Sensor1
 var s2 = 0.0 // Sensor2
-var t = 0.0;
+var t = Math.random() * 100000.0; // Random start
 
 setInterval(function() {
         t += 10;

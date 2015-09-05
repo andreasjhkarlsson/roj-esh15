@@ -42,9 +42,11 @@ function sampleAllStations() {
         var port = parseInt(addressComponents[1]);
         getCurrentDepth(ip,port,function(values) {
             var meanValue = (values[0] + values[1]) / 2.0;
-            console.log(row.NAME+" reported depth of "+meanValue);
+            var snowDepth = row.REFERENCE_VALUE - meanValue;
+            
+            console.log(row.NAME+" reported depth of "+(snowDepth*100.0)+ " cm");
             var statement = db.prepare("INSERT INTO READING(STATION,TIMESTAMP,DEPTH) VALUES(?,CURRENT_TIMESTAMP ,?)");
-            statement.run(row.ID,meanValue);
+            statement.run(row.ID,snowDepth);
             statement.finalize();
         });
     });
@@ -84,7 +86,7 @@ app.get(apiPath("all"), function (req, res) {
 app.get(apiPath("depth"),function(req,res) {
     console.log("depth");
     var id = req.query.id;
-    db.all("SELECT * FROM READING WHERE STATiON = ? ORDER BY TIMESTAMP DESC LIMIT 1;",id,function(err,row) {
+    db.all("SELECT * FROM READING WHERE STATION = ? ORDER BY TIMESTAMP DESC LIMIT 1;",id,function(err,row) {
         res.json( {
             depth: row[0].DEPTH,
             timestamp: row[0].TIMESTAMP
