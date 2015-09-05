@@ -28,13 +28,13 @@ INSERT INTO
 
 INSERT INTO
     STATION (NAME,ADDRESS,LAT,LONG,REFERENCE_VALUE)
-    VALUES  ("Drottninggatan","localhost:12346",58.409207,15.628723,3.0);
+    VALUES  ("Drottninggatan","localhost:12347",58.409207,15.628723,3.0);
 
 INSERT INTO
     STATION (NAME,ADDRESS,LAT,LONG,REFERENCE_VALUE)
-    VALUES  ("Industrigatan","localhost:12346",58.415945,15.587524,3.0);
+    VALUES  ("Industrigatan","localhost:12348",58.415945,15.587524,3.0);
 
 INSERT INTO
     STATION (NAME,ADDRESS,LAT,LONG,REFERENCE_VALUE)
-    VALUES  ("Djurgårdsgatan","localhost:12346",58.400447,15.609149,3.0);
+    VALUES  ("Djurgårdsgatan","localhost:12349",58.400447,15.609149,3.0);
     

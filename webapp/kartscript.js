@@ -40,18 +40,35 @@
 //    }
 //};
 
+
+
 var stations;
 var map;
+var focusMalmslatt = {lat: 58.407728, lng: 15.599847};
 var image = 'images/snowstick_sne_64px.png';
 
+function createMap(){
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: focusMalmslatt,
+        zoom: 14
+    });
+}
 
+function createMarkers(station){
+    new google.maps.Marker({
+        position: station.pos,
+        map: map,
+        icon: image
+    })
+}
 
 function initMap() {
 
     $.get( "/api/all", function(teststations) {
         stations = teststations;
-        for(i = 0; i < stations.length; i++){
-            alert(stations[i].name);
+        createMap();
+        for(var i = 0; i < stations.length; i++){
+            createMarkers(stations[i]);
         }
     });
 
@@ -64,11 +81,11 @@ function initMap() {
     for (var station in linkopingstationer) {
         // Create markers
         for (var i = 0; i < linkopingstationer.length; ++i) {
-            new google.maps.Marker({
-                position: linkopingstationer[i].pos,
-                map: map,
-                icon: image
-            });
+            //new google.maps.Marker({
+            //    position: linkopingstationer[i].pos,
+            //    map: map,
+            //    icon: image
+            //});
         }
         //create circle indicating traffic
         var trafficCircle = new google.maps.Circle({
