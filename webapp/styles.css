@@ -48,7 +48,7 @@ header, main, footer {
 }
 
 .collapsible-body li:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: #b2dfdb;
 }
 
 .navbar-inverse .navbar-brand:hover,
