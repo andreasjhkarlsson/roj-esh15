@@ -13,8 +13,16 @@ header, main, footer {
 }
 
 #chart {
-    height: 5%;
+    height: 20%;
     width: 100%;
+}
+
+#chart1 {
+    height: auto;
+}
+
+#main {
+    height: auto;
 }
 
 #map
@@ -40,7 +48,7 @@ header, main, footer {
 }
 
 .collapsible-body li:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: #b2dfdb;
 }
 
 .navbar-inverse .navbar-brand:hover,
