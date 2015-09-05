@@ -63,10 +63,10 @@ function apiPath(endpoint) {
     return "/api/" + endpoint;
 }
 
+
 app.get(apiPath("all"), function (req, res) {
     console.log("/all");
-    
-    
+
     var result = [];
     
     db.each("SELECT * FROM STATION;",function(err,row) {
@@ -86,11 +86,17 @@ app.get(apiPath("all"), function (req, res) {
 app.get(apiPath("depth"),function(req,res) {
     console.log("depth");
     var id = req.query.id;
-    db.all("SELECT * FROM READING WHERE STATION = ? ORDER BY TIMESTAMP DESC LIMIT 1;",id,function(err,row) {
-        res.json( {
-            depth: row[0].DEPTH,
-            timestamp: row[0].TIMESTAMP
-        });
+    db.all("SELECT * FROM READING WHERE STATION = ? ORDER BY TIMESTAMP DESC LIMIT 1;",id,function(err,rows) {
+        
+        if (rows.length < 1) {
+            res.json({});
+        } else {
+            res.json( {
+                depth: rows[0].DEPTH,
+                timestamp: rows[0].TIMESTAMP
+            });             
+        }
+
     });
 });
 
