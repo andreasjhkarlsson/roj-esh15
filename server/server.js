@@ -73,21 +73,24 @@ app.get(apiPath("all"), function (req, res) {
             id: row.ID,
             name: row.NAME,
             pos: {lat: row.LAT, lng: row.LONG}
-            
         };
         
         result.push(station);
     }, function() {
         res.json(result);   
     });
-    
 });
 
-app.post(apiPath("up"), function(req, res) {
-    count += 1;
-    res.json("OK");
+app.get(apiPath("depth"),function(req,res) {
+    console.log("depth");
+    var id = req.query.id;
+    db.all("SELECT * FROM READING WHERE STATiON = ? ORDER BY TIMESTAMP DESC LIMIT 1;",id,function(err,row) {
+        res.json( {
+            depth: row[0].DEPTH,
+            timestamp: row[0].TIMESTAMP
+        });
+    });
 });
-
 
 app.listen(3000, function () {
   console.log('Server listening on', 3000)
