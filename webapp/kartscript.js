@@ -38,7 +38,7 @@ var linkopingstationer = {
 };
 
 var map;
-var image = 'images/snowstick-1.png';
+var image = 'images/snowstick_sne_64px.png';
 
 function initMap() {
     // Create map, zoom  and center on default station
@@ -96,10 +96,10 @@ function initMap() {
         maxWidth: 200
     });
 
-    //add clicklistener to marker to show info window on click
+/*    //add clicklistener to marker to show info window on click
     station1.addListener('click', function() {
         infowindow.open(map, station1);
-    });
+    });*/
 
 }
 

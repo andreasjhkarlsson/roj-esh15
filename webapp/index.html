@@ -6,6 +6,8 @@
     <link type="text/css" rel="stylesheet" href="bower_components/materialize/dist/css/materialize.min.css"  media="screen,projection"/>
     <title>Röj</title>
     <link rel="stylesheet" href="styles.css"/>
+    <link rel="stylesheet" href="bower_components/chartist/dist/chartist.min.css">
+</head>
 </head>
 <body>
 
@@ -13,7 +15,7 @@
 <div class="row">
 
     <div class="col s12 m4 l3 blue lighten-4">
-        <div class="row">LOGO</div>
+        <div class="row s12 m4 l3" id="logo">LOGGA</div>
         <ul class="collapsible grey lighten-3" data-collapsible="expandable">
             <li>
                 <div class="collapsible-header active"><i class="material-icons"></i>Mätstationer</div>
@@ -39,6 +41,11 @@
         <div id="map"></div>
     </div>
 
+    <div class="col s12 m12 l12 blue lighten-3 z-depth-2" id="chart">
+        <div class="ct-chart ct-golden-section" id="chart1"></div>
+        </div>
+    </div>
+
 </div>
 
 <!--jQuery-->
@@ -47,6 +54,10 @@
 <script type="text/javascript" src="bower_components/materialize/bin/materialize.js"></script>
 <!--Kartscript-->
 <script type="text/javascript" src="kartscript.js"></script>
+<!--Chartkomponenter-->
+<script type="text/javascript" src="bower_components/chartist/dist/chartist.min.js"></script>
+<!--Chartscript-->
+<script type="text/javascript" src="chartscript.js"></script>
 <!--API KEY AIzaSyDS5YnG1YBvFm3daqWd5d0Fc8GqXfiqkd0-->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
 

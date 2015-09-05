@@ -1,5 +1,6 @@
+@import url(https://fonts.googleapis.com/css?family=Lato);
 
-html, body { height: 100%; margin: 0; padding: 0; }
+html, body { height: 100%; margin: 0; padding: 0; font-family: "Lato", "Helvetica", "Arial", "sans-serif"}
 
 #map
 {
@@ -8,7 +9,12 @@ html, body { height: 100%; margin: 0; padding: 0; }
     margin: 0 auto;
 }
 
+#logo {
+    text-align: center;
+}
+
 .row {
     margin-top: 1%;
     height: 100%;
 }
+
