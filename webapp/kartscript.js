@@ -140,5 +140,5 @@ $(".stations").on('mouseenter','li', function () {
 }).on('mouseleave', 'li', function () {
     var menuItemId = $(this).get(0).id - 1;
 
-    stations[menuItemId].marker.setAnimation(google.maps.Animation.NULLs);
+    stations[menuItemId].marker.setAnimation(google.maps.Animation.NULL);
     });
