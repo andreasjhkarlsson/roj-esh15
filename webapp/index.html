@@ -8,43 +8,52 @@
     <link rel="stylesheet" href="styles.css"/>
     <link rel="stylesheet" href="bower_components/chartist/dist/chartist.min.css">
 </head>
-</head>
 <body>
 
 <!-- Page Layout here -->
-<div class="row">
-
-    <div class="col s12 m4 l3 blue lighten-4">
-        <div class="row s12 m4 l3" id="logo">LOGGA</div>
-        <ul class="collapsible grey lighten-3" data-collapsible="expandable">
-            <li>
-                <div class="collapsible-header active"><i class="material-icons"></i>Mätstationer</div>
-                <div class="collapsible-body"><p>Malmslätt</p></div>
-                <div class="collapsible-body"><p>Västra vägen</p></div>
-
-            </li>
-            <li>
-                <div class="collapsible-header"><i class="material-icons"></i>Kartlager</div>
-                <div class="collapsible-body"><p>Prioriterade vägar</p></div>
-                <div class="collapsible-body"><p>Trafik</p></div>
-
-            </li>
-            <li>
-                <div class="collapsible-header"><i class="material-icons"></i>Third</div>
-                <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-            </li>
-        </ul>
-
-    </div>
-
-    <div class="col s12 m8 l9 grey lighten-3" id="main">
-        <div id="map"></div>
-    </div>
-
-    <div class="col s12 m12 l12 blue lighten-3 z-depth-2" id="chart">
-        <div class="ct-chart ct-golden-section" id="chart1"></div>
+<header>
+    <nav class="top-nav blue lighten-3 black-text">
+        <div class="container">
+            <div class="nav-wrapper"><a class="page-title">Text...</a></div>
         </div>
-    </div>
+    </nav>
+    <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="mdi-navigation-menu"></i></a></div>
+    <ul id="nav-mobile" class="side-nav fixed" style="width: 240px;">
+        <li class="logo"><a id="logo-container" href="http://eastswedenhack.se" class="brand-logo">
+            <object id="front-page-logo" type="image/svg+xml" data="">Your browser does not support SVG</object></a></li>
+        <li class="no-padding">
+            <ul class="collapsible collapsible-accordion">
+                <li class="bold"><a class="waves-effect waves-grey">Mätstationer</a>
+                    <div class="collapsible-body" style="display: block;">
+                        <ul>
+                            <li><a href="#">Station 1</a></li>
+                            <li><a href="#">Station 2</a></li>
+                            <li><a href="#">Station 3</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="bold"><a class="waves-effect waves-grey">Visa datalager</a>
+                    <div class="collapsible-body" style="display: block;">
+                        <ul>
+                            <li><a href="badges.html">Snödjup</a></li>
+                            <li><a href="badges.html">Trafik</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</header>
+    <main>
+        <div class="col s12 m8 l9 grey lighten-3" id="main">
+            <div id="map"></div>
+        </div>
+
+        <div class="col s12 m12 l12 blue lighten-3 z-depth-2" id="chart">
+            <div class="ct-chart ct-golden-section" id="chart1"></div>
+            </div>
+        </div>
+    </main>
 
 </div>
 
