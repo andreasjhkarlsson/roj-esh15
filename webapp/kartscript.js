@@ -25,7 +25,7 @@ function initMap() {
             addHoverListener(stations[i]);
             updateDepth(stations[i]);
 
-            $(".top-li ul").append("<li><a href='#'>"+stations[i].name+"</a></li>");
+            $(".top-li .stations").append("<li><a class='station' href='#'>"+stations[i].name+"</a></li>");
         }
 
 
@@ -113,5 +113,4 @@ function createDepthCircles(station){
         radius: Math.sqrt(station.depth) * 10
     });
 }
-
 
