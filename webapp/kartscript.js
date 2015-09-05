@@ -25,7 +25,7 @@ function initMap() {
             addHoverListener(stations[i]);
             updateDepth(stations[i]);
 
-            $(".top-li .stations").append("<li><a class='station' href='#'>"+stations[i].name+"</a></li>");
+            $(".top-li .stations").append("<li id="+stations[i].id+"><a class='station' href='#'>"+stations[i].name+"</a></li>");
         }
 
 
@@ -56,9 +56,11 @@ function updateDepth(station){
 function addHoverListener(station){
     station.marker.addListener('mouseover', function(){
         station.info.open(map, station.marker);
+        highlightStationMenu(station);
     });
     station.marker.addListener('mouseout', function(){
         station.info.close(map, station.marker);
+        resetStationMenu();
     });
 }
 
@@ -114,3 +116,16 @@ function createDepthCircles(station){
     });
 }
 
+function highlightStationMenu(station) {
+    $(".top-li .stations > li").each( function( index, element ){
+        if ($(this).get(0).id == station.id) {
+            $(this).css("background-color", "#b2dfdb");
+        }
+    });
+}
+
+function resetStationMenu() {
+    $(".top-li .stations > li").each(function (index, element) {
+        $(this).css("background-color", "#fff");
+    });
+}
