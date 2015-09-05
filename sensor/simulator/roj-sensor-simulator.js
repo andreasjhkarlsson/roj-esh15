@@ -9,8 +9,18 @@ if (process.argv.length < 3)
 var port = parseInt(process.argv[process.argv.length-1]);
 
 
-var s1 = 2.300
-var s2 = 2.308
+var s1 = 0.0 // Sensor1
+var s2 = 0.0 // Sensor2
+var t = 0.0;
+
+setInterval(function() {
+        t += 10;
+        var height = 3.0;
+        var depth = (((Math.sin(t/100000) + 1.0) / 2.0) * 5.0) / 100.0; // 0-5 cm
+        s1 = height - depth;
+        s2 = height - depth + (Math.random() / 200.0); // Random variation by 0.5 cm
+    
+    }, 10);
 
 var server = net.createServer(function(socket) {
     
