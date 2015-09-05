@@ -24,7 +24,11 @@ function initMap() {
             createDepthCircles(stations[i]);
             addHoverListener(stations[i]);
             updateDepth(stations[i]);
+
+            $(".top-li ul").append("<li><a href='#'>"+stations[i].name+"</a></li>");
         }
+
+
     });
 }
 
@@ -35,7 +39,7 @@ function createInfoWindowHTML(station) {
         '</div>'+
         '<p>Station: ' + station.name + '</p>' +
         '<p>Snödjup: ' + station.depth + ' mm</p>' +
-        '<p>Traffik: ' + station.traffic + ' fordon/h</p>' +
+        '<p>Trafik: ' + station.traffic + ' fordon/h</p>' +
         '</div>'+
         '</div>';
     
