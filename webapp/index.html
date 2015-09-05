@@ -9,15 +9,49 @@
 </head>
 <body>
 
-<div id="map"></div>
+<!-- Page Layout here -->
+<div class="row">
 
-<!--API KEY AIzaSyDS5YnG1YBvFm3daqWd5d0Fc8GqXfiqkd0-->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
+    <div class="col s12 m4 l3 blue lighten-4">
+        <div class="row">LOGO</div>
+        <ul class="collapsible grey lighten-3" data-collapsible="expandable">
+            <li>
+                <div class="collapsible-header active"><i class="material-icons"></i>Mätstationer</div>
+                <div class="collapsible-body"><p>Malmslätt</p></div>
+                <div class="collapsible-body"><p>Västra vägen</p></div>
+
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons"></i>Kartlager</div>
+                <div class="collapsible-body"><p>Prioriterade vägar</p></div>
+                <div class="collapsible-body"><p>Trafik</p></div>
+
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons"></i>Third</div>
+                <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="col s12 m8 l9 grey lighten-3" id="main">
+        <div id="map"></div>
+    </div>
+
+</div>
+
 <!--jQuery-->
 <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 <!--Materialize-->
 <script type="text/javascript" src="bower_components/materialize/bin/materialize.js"></script>
 <!--Kartscript-->
 <script type="text/javascript" src="kartscript.js"></script>
+<!--API KEY AIzaSyDS5YnG1YBvFm3daqWd5d0Fc8GqXfiqkd0-->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
+
+
+
+
 </body>
 </html>
