@@ -6,46 +6,36 @@
 
 
 
-
-//var linkopingstationer = {
-//    malmslatt: {
-//        pos: {lat: 58.407728, lng: 15.599847},
-//        address: 'Malmslättsvägen',
-//        traffic: 100,
-//        depth: 10
-//    },
-//    universitetsvägen: {
-//        pos: {lat: 58.397790, lng: 15.571051},
-//        address: 'Universitetsvägen',
-//        traffic: 20,
-//        depth: 15
-//    },
-//    drottninggatan: {
-//        pos: {lat: 58.409207, lng: 15.628723},
-//        address: 'Drottninggatan',
-//        traffic: 90,
-//        depth: 7
-//    },
-//    industrigatan: {
-//        pos: {lat: 58.415945, lng: 15.587524},
-//        address: 'Industrigatan',
-//        traffic: 75,
-//        depth: 2
-//    },
-//    djurgardsgatan: {
-//        pos: {lat: 58.400447, lng: 15.609149},
-//        address: 'Djurgårdsgatan',
-//        traffic: 50,
-//        depth: 24
-//    }
-//};
-
-
-
 var stations;
 var map;
 var focusMalmslatt = {lat: 58.407728, lng: 15.599847};
 var image = 'images/snowstick_sne_64px.png';
+
+function initMap() {
+    $.get( "/api/all", function(teststations) {
+        stations = teststations;
+        createMap();
+        for(var i = 0; i < stations.length; i++){
+            stations[i].traffic = 50;
+            stations[i].depth = 30;
+            stations[i].marker = createMarker(stations[i]);
+            stations[i].info = createInfoWindow(stations[i]);
+            createTrafficCircles(stations[i]);
+            createDepthCircles(stations[i]);
+            addHoverListener(stations[i]);
+        }
+    });
+}
+
+function addHoverListener(station){
+    station.marker.addListener('mouseover', function(){
+        station.info.open(map, station.marker);
+    });
+    station.marker.addListener('mouseout', function(){
+        station.info.close(map, station.marker);
+    });
+}
+
 
 function createMap(){
     map = new google.maps.Map(document.getElementById('map'), {
@@ -54,84 +44,54 @@ function createMap(){
     });
 }
 
-function createMarkers(station){
-    new google.maps.Marker({
+function createInfoWindow(station){
+    var contentString = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<p>Station: ' + station.name + '</p>' +
+        '<p>Snödjup: ' + station.depth + ' mm</p>' +
+        '<p>Traffik: ' + station.traffic + ' fordon/h</p>' +
+        '</div>'+
+        '</div>';
+    return new google.maps.InfoWindow({
+        content: contentString,
+        maxWidth: 150
+    });
+}
+
+function createMarker(station){
+    return new google.maps.Marker({
+        id: station.id,
         position: station.pos,
         map: map,
         icon: image
     })
 }
 
-function initMap() {
-
-    $.get( "/api/all", function(teststations) {
-        stations = teststations;
-        createMap();
-        for(var i = 0; i < stations.length; i++){
-            createMarkers(stations[i]);
-        }
+function createTrafficCircles(station){
+    new google.maps.Circle({
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35,
+        map: map,
+        center: station.pos,
+        radius: Math.sqrt(station.traffic) * 10
     });
-
-    // Create map, zoom  and center on default station
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: linkopingstationer.malmslatt.pos,
-        zoom: 14
-    });
-
-    for (var station in linkopingstationer) {
-        // Create markers
-        for (var i = 0; i < linkopingstationer.length; ++i) {
-            //new google.maps.Marker({
-            //    position: linkopingstationer[i].pos,
-            //    map: map,
-            //    icon: image
-            //});
-        }
-        //create circle indicating traffic
-        var trafficCircle = new google.maps.Circle({
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35,
-            map: map,
-            center: linkopingstationer[station].pos,
-            radius: Math.sqrt(linkopingstationer[station].traffic) * 10
-        });
-
-        // Create circle indicating snow depth
-        var depthCircle = new google.maps.Circle({
-            strokeColor: '#0000FF',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#0000FF',
-            fillOpacity: 0.35,
-            map: map,
-            center: linkopingstationer[station].pos,
-            radius: Math.sqrt(linkopingstationer[station].depth) * 20
-        });
-    }
-    
-    // temporary info window text
-    var contentString = '<div id="content">'+
-        '<div id="siteNotice">'+
-        '</div>'+
-        '<p id="depthText" class="firstHeading">Depth: 11mm</p>'+
-        '<p id="trafficText" class="firstHeading">Traffic: 20 v/min</p>'+
-        '</div>'+
-        '</div>';
-
-    // create info-window
-    var infowindow = new google.maps.InfoWindow({
-        content: contentString,
-        maxWidth: 200
-    });
-
-/*    //add clicklistener to marker to show info window on click
-    station1.addListener('click', function() {
-        infowindow.open(map, station1);
-    });*/
-
 }
 
-//    Orange color = #ff5400
+function createDepthCircles(station){
+    new google.maps.Circle({
+        strokeColor: '#0000FF',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#0000FF',
+        fillOpacity: 0.35,
+        map: map,
+        center: station.pos,
+        radius: Math.sqrt(station.depth) * 10
+    });
+}
+
+
