@@ -2,6 +2,7 @@
  * Created by samthellman on 05/09/15.
  */
 
+//http://localhost:63342/webapp/index.html
 
 var linkopingstationer = {
     malmslatt: {
@@ -46,46 +47,16 @@ function initMap() {
         zoom: 14
     });
 
-    var station1 = new google.maps.Marker({
-        position: linkopingstationer.malmslatt.pos,
-        map: map,
-        icon: image
-    });
-    var station2 = new google.maps.Marker({
-        position: linkopingstationer.universitetsvägen.pos,
-        map: map,
-        icon: image
-    });
-    var station3 = new google.maps.Marker({
-        position: linkopingstationer.drottninggatan.pos,
-        map: map,
-        icon: image
-    });
-    var station4 = new google.maps.Marker({
-        position: linkopingstationer.djurgardsgatan.pos,
-        map: map,
-        icon: image
-    });
-    var station5 = new google.maps.Marker({
-        position: linkopingstationer.industrigatan.pos,
-        map: map,
-        icon: image
-    });
-
-//        for (var station in linkopingstationer) {
-//            // Create markers
-//            for (var i = 0; i < linkopingstationer.length; ++i) {
-//                var station[i] = new google.maps.Marker({
-//                    position: linkopingstationer[i].pos,
-//                    map: map,
-//                    icon: image
-//                });
-//            }
-//
-//        }
-
     for (var station in linkopingstationer) {
-        // Create circle indicating traffic
+        // Create markers
+        for (var i = 0; i < linkopingstationer.length; ++i) {
+            new google.maps.Marker({
+                position: linkopingstationer[i].pos,
+                map: map,
+                icon: image
+            });
+        }
+        //create circle indicating traffic
         var trafficCircle = new google.maps.Circle({
             strokeColor: '#FF0000',
             strokeOpacity: 0.8,
@@ -96,9 +67,8 @@ function initMap() {
             center: linkopingstationer[station].pos,
             radius: Math.sqrt(linkopingstationer[station].traffic) * 10
         });
-    }
-    for (var station in linkopingstationer) {
-        // Create cicle indicating snow depth
+
+        // Create circle indicating snow depth
         var depthCircle = new google.maps.Circle({
             strokeColor: '#0000FF',
             strokeOpacity: 0.8,
@@ -110,7 +80,7 @@ function initMap() {
             radius: Math.sqrt(linkopingstationer[station].depth) * 20
         });
     }
-
+    
     // temporary info window text
     var contentString = '<div id="content">'+
         '<div id="siteNotice">'+
