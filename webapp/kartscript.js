@@ -23,8 +23,30 @@ function initMap() {
             createTrafficCircles(stations[i]);
             createDepthCircles(stations[i]);
             addHoverListener(stations[i]);
+            updateDepth(stations[i]);
         }
     });
+}
+
+
+function createInfoWindowHTML(station) {
+    return '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<p>Station: ' + station.name + '</p>' +
+        '<p>Snödjup: ' + station.depth + ' mm</p>' +
+        '<p>Traffik: ' + station.traffic + ' fordon/h</p>' +
+        '</div>'+
+        '</div>';
+    
+}
+
+function updateDepth(station){
+    $.get("/api/depth?id="+station.id,function(sensorData){
+        station.depth = sensorData.depth;
+        station.info.setContent(createInfoWindowHTML(station));
+    });
+    
 }
 
 function addHoverListener(station){
@@ -44,15 +66,9 @@ function createMap(){
     });
 }
 
+
 function createInfoWindow(station){
-    var contentString = '<div id="content">'+
-        '<div id="siteNotice">'+
-        '</div>'+
-        '<p>Station: ' + station.name + '</p>' +
-        '<p>Snödjup: ' + station.depth + ' mm</p>' +
-        '<p>Traffik: ' + station.traffic + ' fordon/h</p>' +
-        '</div>'+
-        '</div>';
+    var contentString = createInfoWindowHTML(station);
     return new google.maps.InfoWindow({
         content: contentString,
         maxWidth: 150
