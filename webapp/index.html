@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Plow that snow!</title>
-	</head>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link type="text/css" rel="stylesheet" href="bower_components/materialize/dist/css/materialize.min.css"  media="screen,projection"/>
+    <title>Röj</title>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
 
-	<body style="background-color: black">
-	<marquee style="width:50%; margin-left:25%; margin-right:25%; font-size:250px;background-color: white;">RÖJ RÖJ RÖJ</marquee>
-	</body>
+<div id="map"></div>
 
+<!--API KEY AIzaSyDS5YnG1YBvFm3daqWd5d0Fc8GqXfiqkd0-->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
+<!--jQuery-->
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+<!--Materialize-->
+<script type="text/javascript" src="bower_components/materialize/bin/materialize.js"></script>
+<!--Kartscript-->
+<script type="text/javascript" src="kartscript.js"></script>
+</body>
 </html>
