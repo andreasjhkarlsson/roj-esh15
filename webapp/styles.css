@@ -48,7 +48,7 @@ header, main, footer {
 }
 
 .collapsible-body li:hover {
-    background-color: #b2dfdb;
+    background-color: #b2dfdb!important;
 }
 
 /*Tar bort element nere till höger i kartan*/
