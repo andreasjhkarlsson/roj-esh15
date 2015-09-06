@@ -34,21 +34,25 @@ function getCurrentDepth(ip,port,onSuccess) {
     });
 }
 
+function sampleStation(dbStation,onDone) {
+    var addressComponents = dbStation.ADDRESS.split(":");
+    var ip = addressComponents[0];
+    var port = parseInt(addressComponents[1]);
+    getCurrentDepth(ip,port,function(values) {
+        var meanValue = (values[0] + values[1]) / 2.0;
+        var snowDepth = dbStation.REFERENCE_VALUE - meanValue;
+
+        console.log(dbStation.NAME+" reported depth of "+(snowDepth*100.0)+ " cm");
+        var statement = db.prepare("INSERT INTO READING(STATION,TIMESTAMP,DEPTH) VALUES(?,CURRENT_TIMESTAMP ,?)");
+        statement.run(dbStation.ID,snowDepth);
+        statement.finalize();
+    });   
+}
+
 function sampleAllStations() {
     console.log("Start sampling round robin...");
     db.each("SELECT * FROM STATION;",function(err,row) {
-        var addressComponents = row.ADDRESS.split(":");
-        var ip = addressComponents[0];
-        var port = parseInt(addressComponents[1]);
-        getCurrentDepth(ip,port,function(values) {
-            var meanValue = (values[0] + values[1]) / 2.0;
-            var snowDepth = row.REFERENCE_VALUE - meanValue;
-            
-            console.log(row.NAME+" reported depth of "+(snowDepth*100.0)+ " cm");
-            var statement = db.prepare("INSERT INTO READING(STATION,TIMESTAMP,DEPTH) VALUES(?,CURRENT_TIMESTAMP ,?)");
-            statement.run(row.ID,snowDepth);
-            statement.finalize();
-        });
+        sampleStation(row,function(){});
     });
 }
 
@@ -98,6 +102,33 @@ app.get(apiPath("depth"),function(req,res) {
         }
 
     });
+});
+
+app.post(apiPath("calibrate"),function(req,res){
+    console.log("calibrate");
+    var id = req.query.id;
+    db.all("SELECT * FROM STATION WHERE ID = ?",id,function(err,rows) {
+        console.log(rows[0].NAME); 
+        
+        db.run("DELETE FROM READING WHERE STATION = ?",rows[0].ID);
+        var addressComponents = rows[0].ADDRESS.split(":");
+        var ip = addressComponents[0];
+        var port = parseInt(addressComponents[1]);        
+        
+        getCurrentDepth(ip,port,function(values) {
+            
+            var meanValue = (values[0] + values[1]) / 2.0; 
+                    
+            db.run("UPDATE STATION SET REFERENCE_VALUE = ? WHERE ID = "+id,meanValue);
+            
+        });
+
+        
+        res.json({});
+    });
+    
+    
+    
 });
 
 app.listen(3000, function () {
