@@ -9,36 +9,57 @@ var map;
 var focusMalmslatt = {lat: 58.407728, lng: 15.599847};
 var image = 'images/snowstick_sne_64px.png';
 
+//$(document).ready(function(){
+//    setInterval(function(){
+//        for(var i = 0; i < stations.length; i++){
+//            updateDepth(stations[i]);
+//            updateCircle(stations[i]);
+//        }
+//
+//    }, 1000);
+//});
+
+var trafficLayer;
+
 function initMap() {
     $.get( "/api/all", function(teststations) {
         stations = teststations;
         createMap();
+        trafficLayer = new google.maps.TrafficLayer();
         for(var i = 0; i < stations.length; i++){
-            stations[i].traffic = 50;
-            stations[i].depth = 30;
+            updateDepth(stations[i]);
+            updateCircle(stations[i]);
             stations[i].marker = createMarker(stations[i]);
             stations[i].info = createInfoWindow(stations[i]);
-            createTrafficCircles(stations[i]);
-            createDepthCircles(stations[i]);
             addHoverListener(stations[i]);
             //addClickListener(stations[i]);
-            updateDepth(stations[i]);
+
 
             //Skapar DOM-element (<li>) i vänstermenyn med stationsnamn och stations-id
             $(".top-li .stations").append("<li id="+stations[i].id+"><a class='station' href='#'>"+stations[i].name+"</a></li>");
         }
 
-
+        //displayDirections();
     });
 }
+
+$('#trafficToggle').click(function() {
+ 
+    if (trafficLayer.getMap() == null) {
+        trafficLayer.setMap(map);
+    }
+    else {
+        trafficLayer.setMap(null);
+    }
+
+})
 
 function createInfoWindowHTML(station) {
     return '<div id="content">'+
         '<div id="siteNotice">'+
         '</div>'+
-        '<p>Station: ' + station.name + '</p>' +
-        '<p>Snödjup: ' + station.depth + ' mm</p>' +
-        '<p>Trafik: ' + station.traffic + ' fordon/h</p>' +
+        '<p><i class="material-icons" style="float:right;">settings_remote</i>Station: ' + station.name + '</p>' +
+        '<p>Snödjup: ' + station.depth + ' mm </p>' +
         '</div>'+
         '</div>';
     
@@ -48,6 +69,22 @@ function updateDepth(station){
     $.get("/api/depth?id="+station.id,function(sensorData){
         station.depth = roundFloat(sensorData.depth * 100.0, 1);
         station.info.setContent(createInfoWindowHTML(station));
+    });
+}
+
+function updateCircle(station){
+    $.get("/api/depth?id="+station.id,function(sensorData){
+        station.depth = roundFloat(sensorData.depth * 100.0, 1);
+        station.circles = new google.maps.Circle({
+            strokeColor: '#7CB8C8',
+            strokeOpacity: 1,
+            strokeWeight: 2,
+            fillColor: '#7CB8C8',
+            fillOpacity: 0.35,
+            map: map,
+            center: station.pos,
+            radius: Math.sqrt(station.depth) * Math.sqrt(station.depth) * 30
+        });
     });
 }
 
@@ -76,12 +113,11 @@ function addHoverListener(station){
 function createMap(){
     map = new google.maps.Map(document.getElementById('map'), {
         center: focusMalmslatt,
-        zoom: 14,
+        zoom: 11,
         //Gömmer google maps UI
         disableDefaultUI: true
     });
 }
-
 
 function createInfoWindow(station){
     var contentString = createInfoWindowHTML(station);
@@ -100,51 +136,25 @@ function createMarker(station){
     })
 }
 
-function createTrafficCircles(station){
-    new google.maps.Circle({
-        strokeColor: '#FF0000',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: '#FF0000',
-        fillOpacity: 0.35,
-        map: map,
-        center: station.pos,
-        radius: Math.sqrt(station.traffic) * 10
-    });
-}
 
-function createDepthCircles(station){
-    new google.maps.Circle({
-        strokeColor: '#0000FF',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: '#0000FF',
-        fillOpacity: 0.35,
-        map: map,
-        center: station.pos,
-        radius: Math.sqrt(station.depth) * 10
-    });
-}
 
 function highlightStationMenu(station) {
     $(".top-li .stations > li").each( function( index, element ){
-
         //Ändrar bakgrundsfärg i menyn (för element med matchande id) då muspekaren hovrar över kartmarkör
         if ($(this).get(0).id == station.id) {
-            $(this).css("background-color", "#b2dfdb");
+            $(this).css("background-color", "#7CB8C8");
         }
     });
 }
 
 function resetStationMenu() {
     $(".top-li .stations > li").each(function (index, element) {
-
         //Sätter bakgrundsfärgen till vit för listelementen med stationsnamn i vänstermenyn (kallas då muspekaren lämnar markör på kartan)
         $(this).css("background-color", "#fff");
     });
 }
 
-
+//Bounce animation for map markers
 $(".stations").on('mouseenter','li', function () {
     var menuItemId = $(this).get(0).id - 1;
 
@@ -154,3 +164,33 @@ $(".stations").on('mouseenter','li', function () {
 
     stations[menuItemId].marker.setAnimation(google.maps.Animation.NULL);
     });
+
+//Visa highlights för vägar
+/*
+function displayDirections() {
+    var directionDisplay;
+    var directionsService = new google.maps.DirectionsService();
+
+    var start = new google.maps.LatLng(58.407728, 15.599847);
+
+    function renderDirections(result) {
+        var directionsRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true});
+        directionsRenderer.setMap(map);
+        directionsRenderer.setDirections(result);
+    }
+
+    function requestDirections(start, end) {
+        directionsService.route({
+            origin: start,
+            destination: end,
+            travelMode: google.maps.DirectionsTravelMode.DRIVING
+        }, function(result) {
+            renderDirections(result);
+        });
+    }
+
+    requestDirections('(58.406393, 15.584572)', '(58.409972, 15.634494)');
+    requestDirections('(58.419614, 15.615540)', '(58.409489, 15.631074)');
+    requestDirections('(58.420134, 15.596547)', '(58.408835, 15.609144)');
+}*/
+

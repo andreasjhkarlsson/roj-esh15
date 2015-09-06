@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Lato);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,900,700);
 
 html, body { height: 100%; margin: 0; padding: 0; font-family: "Lato", "Helvetica", "Arial", "sans-serif"}
 
@@ -13,13 +13,17 @@ header, main, footer {
 }
 
 #chart {
-    height: 20%;
+    position: fixed;
+    bottom: 0;
+    height: 15vw;
     width: 100%;
+    padding: 0.5vw;
 }
 
 #chart1 {
-    height: auto;
+    height: 15vw;
 }
+
 
 #main {
     height: auto;
@@ -43,6 +47,29 @@ header, main, footer {
     height: 100%;
 }
 
+.side-nav a {
+    font-size: 14px;
+    padding: 0;
+}
+
+.side-nav.fixed .top-li .bold {
+    font-weight: 700;
+}
+
+.side-nav .collapsible-body li{
+    height: 48px;
+}
+
+.side-nav .collapsible-body li a{
+    height: 48px;
+    line-height: 48px;
+}
+
+.side-nav .collapsible-body li a i{
+    height: 48px;
+    line-height: 48px;
+}
+
 .top-li:hover {
      background-color: #fff;
 }
@@ -61,3 +88,41 @@ header, main, footer {
     color: #999999;
 }
 
+.side-nav li:hover, .side-nav li.active {
+    background-color: inherit; }
+
+.collapsible-body li:hover {
+    background-color: #7CB8C8!important;
+
+}
+#map{
+    height: 75vh;
+}
+
+#chart-holder{
+    height: 25vh;
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+}
+
+#chart-info{
+    position: relative;
+    top: 25vh;
+    margin-top: -33px;
+    left: 30px;
+    float:left;
+    font-size: 10px;
+    color: darkgrey;
+}
+
+#chart1{
+    height: 25vh;
+    width: 75vw;
+    margin-left: 50px;
+}
+
+.logo img{
+    padding-top: 20px;
+    margin-left: -5px;
+}
