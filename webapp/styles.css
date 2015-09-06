@@ -12,9 +12,6 @@ header, main, footer {
     }
 }
 
-
-
-
 #chart {
     position: fixed;
     bottom: 0;
@@ -59,13 +56,18 @@ header, main, footer {
     font-weight: 700;
 }
 
-.side-nav .stations li{
+.side-nav .collapsible-body li{
     height: 48px;
-    /*line-height: 1;*/
 }
 
-.side-nav .stations li a{
+.side-nav .collapsible-body li a{
+    height: 48px;
+    line-height: 48px;
+}
 
+.side-nav .collapsible-body li a i{
+    height: 48px;
+    line-height: 48px;
 }
 
 .top-li:hover {
@@ -97,7 +99,6 @@ header, main, footer {
     height: 75vh;
 }
 
-
 #chart-holder{
     height: 25vh;
     width: 100%;
@@ -105,6 +106,23 @@ header, main, footer {
     bottom: 0px;
 }
 
+#chart-info{
+    position: relative;
+    top: 25vh;
+    margin-top: -33px;
+    left: 30px;
+    float:left;
+    font-size: 10px;
+    color: darkgrey;
+}
+
 #chart1{
     height: 25vh;
+    width: 75vw;
+    margin-left: 50px;
+}
+
+.logo img{
+    padding-top: 20px;
+    margin-left: -5px;
 }

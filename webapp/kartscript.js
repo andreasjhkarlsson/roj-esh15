@@ -38,9 +38,8 @@ function createInfoWindowHTML(station) {
     return '<div id="content">'+
         '<div id="siteNotice">'+
         '</div>'+
-        '<p>Station: ' + station.name + '</p>' +
-        '<p>Snödjup: ' + station.depth + ' mm</p>' +
-        '<p>Trafik: ' + station.traffic + ' fordon/h</p>' +
+        '<p><i class="material-icons" style="float:right;">settings_remote</i>Station: ' + station.name + '</p>' +
+        '<p>Snödjup: ' + station.depth + ' mm </p>' +
         '</div>'+
         '</div>';
     
@@ -94,7 +93,7 @@ function addHoverListener(station){
 function createMap(){
     map = new google.maps.Map(document.getElementById('map'), {
         center: focusMalmslatt,
-        zoom: 14,
+        zoom: 13,
         //Gömmer google maps UI
         disableDefaultUI: true
     });
