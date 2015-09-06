@@ -19,10 +19,13 @@ var image = 'images/snowstick_sne_64px.png';
 //    }, 1000);
 //});
 
+var trafficLayer;
+
 function initMap() {
     $.get( "/api/all", function(teststations) {
         stations = teststations;
         createMap();
+        trafficLayer = new google.maps.TrafficLayer();
         for(var i = 0; i < stations.length; i++){
             updateDepth(stations[i]);
             updateCircle(stations[i]);
@@ -36,9 +39,20 @@ function initMap() {
             $(".top-li .stations").append("<li id="+stations[i].id+"><a class='station' href='#'>"+stations[i].name+"</a></li>");
         }
 
-        displayDirections();
+        //displayDirections();
     });
 }
+
+$('#trafficToggle').click(function() {
+ 
+    if (trafficLayer.getMap() == null) {
+        trafficLayer.setMap(map);
+    }
+    else {
+        trafficLayer.setMap(null);
+    }
+
+})
 
 function createInfoWindowHTML(station) {
     return '<div id="content">'+
@@ -103,24 +117,6 @@ function createMap(){
         //Gömmer google maps UI
         disableDefaultUI: true
     });
-
-    // init directions service
-    var dirService = new google.maps.DirectionsService();
-    var dirRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true});
-    dirRenderer.setMap(map);
-
-// highlight a street
-    var request = {
-        origin: "58.406393, 15.584572",
-        destination: "58.409972, 15.634494",
-        //waypoints: [{location:"48.12449,11.5536"}, {location:"48.12515,11.5569"}],
-        travelMode: google.maps.TravelMode.DRIVING
-    };
-    dirService.route(request, function(result, status) {
-        if (status == google.maps.DirectionsStatus.OK) {
-            dirRenderer.setDirections(result);
-        }
-    });
 }
 
 function createInfoWindow(station){
@@ -170,6 +166,7 @@ $(".stations").on('mouseenter','li', function () {
     });
 
 //Visa highlights för vägar
+/*
 function displayDirections() {
     var directionDisplay;
     var directionsService = new google.maps.DirectionsService();
@@ -195,4 +192,5 @@ function displayDirections() {
     requestDirections('(58.406393, 15.584572)', '(58.409972, 15.634494)');
     requestDirections('(58.419614, 15.615540)', '(58.409489, 15.631074)');
     requestDirections('(58.420134, 15.596547)', '(58.408835, 15.609144)');
-}
+}*/
+
