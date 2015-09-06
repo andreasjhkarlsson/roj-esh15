@@ -36,7 +36,7 @@ function initMap() {
             $(".top-li .stations").append("<li id="+stations[i].id+"><a class='station' href='#'>"+stations[i].name+"</a></li>");
         }
 
-
+        displayDirections();
     });
 }
 
@@ -168,3 +168,31 @@ $(".stations").on('mouseenter','li', function () {
 
     stations[menuItemId].marker.setAnimation(google.maps.Animation.NULL);
     });
+
+//Visa highlights för vägar
+function displayDirections() {
+    var directionDisplay;
+    var directionsService = new google.maps.DirectionsService();
+
+    var start = new google.maps.LatLng(58.407728, 15.599847);
+
+    function renderDirections(result) {
+        var directionsRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true});
+        directionsRenderer.setMap(map);
+        directionsRenderer.setDirections(result);
+    }
+
+    function requestDirections(start, end) {
+        directionsService.route({
+            origin: start,
+            destination: end,
+            travelMode: google.maps.DirectionsTravelMode.DRIVING
+        }, function(result) {
+            renderDirections(result);
+        });
+    }
+
+    requestDirections('(58.406393, 15.584572)', '(58.409972, 15.634494)');
+    requestDirections('(58.419614, 15.615540)', '(58.409489, 15.631074)');
+    requestDirections('(58.420134, 15.596547)', '(58.408835, 15.609144)');
+}
