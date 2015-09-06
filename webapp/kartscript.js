@@ -76,7 +76,9 @@ function addHoverListener(station){
 function createMap(){
     map = new google.maps.Map(document.getElementById('map'), {
         center: focusMalmslatt,
-        zoom: 14
+        zoom: 14,
+        //Gömmer google maps UI
+        disableDefaultUI: true
     });
 }
 

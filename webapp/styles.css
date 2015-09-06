@@ -51,6 +51,10 @@ header, main, footer {
     background-color: #b2dfdb!important;
 }
 
+/*Tar bort element nere till höger i kartan*/
+.gm-style-cc { display:none; }
+
+
 .navbar-inverse .navbar-brand:hover,
 .navbar-inverse .navbar-brand:focus {
     background-color: transparent;
