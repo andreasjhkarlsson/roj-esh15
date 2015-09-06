@@ -21,6 +21,7 @@ function initMap() {
             createTrafficCircles(stations[i]);
             createDepthCircles(stations[i]);
             addHoverListener(stations[i]);
+            //addClickListener(stations[i]);
             updateDepth(stations[i]);
 
             //Skapar DOM-element (<li>) i vänstermenyn med stationsnamn och stations-id
@@ -45,10 +46,14 @@ function createInfoWindowHTML(station) {
 
 function updateDepth(station){
     $.get("/api/depth?id="+station.id,function(sensorData){
-        station.depth = sensorData.depth;
+        station.depth = roundFloat(sensorData.depth * 100.0, 1);
         station.info.setContent(createInfoWindowHTML(station));
     });
-    
+}
+
+function roundFloat(n,precision) {
+    var p = Math.pow(10,precision);
+    return Math.round(n*p)/p;
 }
 
 function addHoverListener(station){
@@ -62,11 +67,18 @@ function addHoverListener(station){
     });
 }
 
+//function addClickListener(station){
+//    station.marker.addListener('click', function(){
+//        station.info.open(map, station.marker);
+//    });
+//}
 
 function createMap(){
     map = new google.maps.Map(document.getElementById('map'), {
         center: focusMalmslatt,
-        zoom: 14
+        zoom: 14,
+        //Gömmer google maps UI
+        disableDefaultUI: true
     });
 }
 
