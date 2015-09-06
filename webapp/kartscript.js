@@ -70,13 +70,13 @@ function createInfoWindowHTML(station) {
 
 function updateDepth(station){
     $.get("/api/depth?id="+station.id,function(sensorData){
-        station.depth = Math.abs(roundFloat(sensorData.depth * 100.0, 1));
+        station.depth = Math.abs(roundFloat(sensorData.depth * 1000.0, 1));
         station.info.setContent(createInfoWindowHTML(station));
     });
 }
 
 function updateCircle(station){
-    station.circles.setRadius(Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 30);
+    station.circles.setRadius(Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 5);
 }
 
 function createCircle(station){
@@ -90,7 +90,7 @@ function createCircle(station){
             fillOpacity: 0.35,
             map: map,
             center: station.pos,
-            radius: Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 30
+            radius: Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 5
         });
     });
 }
