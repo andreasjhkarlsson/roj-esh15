@@ -13,12 +13,14 @@ header, main, footer {
 }
 
 #chart {
-    height: 20%;
+    position: fixed;
+    bottom: 0;
+    height: 15vw;
     width: 100%;
 }
 
 #chart1 {
-    height: auto;
+    height: 15vw;
 }
 
 #main {
