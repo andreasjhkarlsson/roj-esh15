@@ -94,10 +94,29 @@ function addHoverListener(station){
 function createMap(){
     map = new google.maps.Map(document.getElementById('map'), {
         center: focusMalmslatt,
-        zoom: 14
+        zoom: 14,
+        //Gömmer google maps UI
+        disableDefaultUI: true
+    });
+
+    // init directions service
+    var dirService = new google.maps.DirectionsService();
+    var dirRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true});
+    dirRenderer.setMap(map);
+
+// highlight a street
+    var request = {
+        origin: "58.406393, 15.584572",
+        destination: "58.409972, 15.634494",
+        //waypoints: [{location:"48.12449,11.5536"}, {location:"48.12515,11.5569"}],
+        travelMode: google.maps.TravelMode.DRIVING
+    };
+    dirService.route(request, function(result, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            dirRenderer.setDirections(result);
+        }
     });
 }
-
 
 function createInfoWindow(station){
     var contentString = createInfoWindowHTML(station);

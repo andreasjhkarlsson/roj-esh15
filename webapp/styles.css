@@ -12,14 +12,21 @@ header, main, footer {
     }
 }
 
-/*#chart {*/
-    /*height: 20%;*/
-    /*width: 100%;*/
-/*}*/
 
-/*#chart1 {*/
-    /*height: auto;*/
-/*}*/
+
+
+#chart {
+    position: fixed;
+    bottom: 0;
+    height: 15vw;
+    width: 100%;
+    padding: 0.5vw;
+}
+
+#chart1 {
+    height: 15vw;
+}
+
 
 #main {
     height: auto;
@@ -68,6 +75,10 @@ header, main, footer {
 .collapsible-body li:hover {
     background-color: #b2dfdb!important;
 }
+
+/*Tar bort element nere till höger i kartan*/
+.gm-style-cc { display:none; }
+
 
 .navbar-inverse .navbar-brand:hover,
 .navbar-inverse .navbar-brand:focus {

@@ -9,3 +9,4 @@ cd webapp
 # For frontend
 sudo npm install -g bower
 bower install materialize
+bower install chartist

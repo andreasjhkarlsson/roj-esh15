@@ -1,3 +1,9 @@
 .ct-chart .ct-grid {
-    stroke-dasharray: none;
+    /*stroke-dasharray: none;*/
 }
+
+.ct-chart .ct-bar {
+    /* Colour of your bars */
+    stroke: #7CB8C8 !important;
+    /* The width of your bars */
+    stroke-width: 17px;
