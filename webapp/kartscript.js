@@ -13,7 +13,7 @@ $(document).ready(function(){
     setInterval(function(){
         for(var i = 0; i < stations.length; i++){
             updateDepth(stations[i]);
-//            updateCircle(stations[i]);
+            updateCircle(stations[i]);
         }
 
     }, 1000);
@@ -31,7 +31,7 @@ function initMap() {
         trafficLayer = new google.maps.TrafficLayer();
         for(var i = 0; i < stations.length; i++){
             updateDepth(stations[i]);
-            updateCircle(stations[i]);
+            createCircle(stations[i]);
             stations[i].marker = createMarker(stations[i]);
             stations[i].info = createInfoWindow(stations[i]);
             addHoverListener(stations[i]);
@@ -70,12 +70,16 @@ function createInfoWindowHTML(station) {
 
 function updateDepth(station){
     $.get("/api/depth?id="+station.id,function(sensorData){
-        station.depth = roundFloat(sensorData.depth * 100.0, 1);
+        station.depth = Math.abs(roundFloat(sensorData.depth * 100.0, 1));
         station.info.setContent(createInfoWindowHTML(station));
     });
 }
 
 function updateCircle(station){
+    station.circles.setRadius(Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 30);
+}
+
+function createCircle(station){
     $.get("/api/depth?id="+station.id,function(sensorData){
         station.depth = roundFloat(sensorData.depth * 100.0, 1);
         station.circles = new google.maps.Circle({
@@ -86,7 +90,7 @@ function updateCircle(station){
             fillOpacity: 0.35,
             map: map,
             center: station.pos,
-            radius: Math.sqrt(station.depth) * Math.sqrt(station.depth) * 30
+            radius: Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 30
         });
     });
 }
