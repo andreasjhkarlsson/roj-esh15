@@ -88,7 +88,7 @@ app.get(apiPath("all"), function (req, res) {
 });
 
 app.get(apiPath("depth"),function(req,res) {
-    console.log("depth");
+    
     var id = req.query.id;
     db.all("SELECT * FROM READING WHERE STATION = ? ORDER BY TIMESTAMP DESC LIMIT 1;",id,function(err,rows) {
         
