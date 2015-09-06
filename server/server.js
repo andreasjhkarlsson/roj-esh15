@@ -56,7 +56,7 @@ function sampleAllStations() {
     });
 }
 
-setInterval(sampleAllStations,10000);
+setInterval(sampleAllStations,1000);
 
 var app = express();
 
