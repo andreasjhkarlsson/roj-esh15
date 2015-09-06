@@ -9,22 +9,28 @@ var map;
 var focusMalmslatt = {lat: 58.407728, lng: 15.599847};
 var image = 'images/snowstick_sne_64px.png';
 
-
+//$(document).ready(function(){
+//    setInterval(function(){
+//        for(var i = 0; i < stations.length; i++){
+//            updateDepth(stations[i]);
+//            updateCircle(stations[i]);
+//        }
+//
+//    }, 1000);
+//});
 
 function initMap() {
     $.get( "/api/all", function(teststations) {
         stations = teststations;
         createMap();
         for(var i = 0; i < stations.length; i++){
-            stations[i].traffic = 50;
-            stations[i].depth = 30;
+            updateDepth(stations[i]);
+            updateCircle(stations[i]);
             stations[i].marker = createMarker(stations[i]);
             stations[i].info = createInfoWindow(stations[i]);
-            stations[i].circle = createDepthCircle(stations[i]);
-            //createTrafficCircles(stations[i]);
             addHoverListener(stations[i]);
             //addClickListener(stations[i]);
-            updateDepth(stations[i]);
+
 
             //Skapar DOM-element (<li>) i vänstermenyn med stationsnamn och stations-id
             $(".top-li .stations").append("<li id="+stations[i].id+"><a class='station' href='#'>"+stations[i].name+"</a></li>");
@@ -63,7 +69,7 @@ function updateCircle(station){
             fillOpacity: 0.35,
             map: map,
             center: station.pos,
-            radius: Math.sqrt(station.depth) * 10
+            radius: Math.sqrt(station.depth) * Math.sqrt(station.depth) * 30
         });
     });
 }
@@ -93,7 +99,7 @@ function addHoverListener(station){
 function createMap(){
     map = new google.maps.Map(document.getElementById('map'), {
         center: focusMalmslatt,
-        zoom: 13,
+        zoom: 11,
         //Gömmer google maps UI
         disableDefaultUI: true
     });
@@ -134,18 +140,7 @@ function createMarker(station){
     })
 }
 
-function createDepthCircle(station){
-    new google.maps.Circle({
-        strokeColor: '#7CB8C8',
-        strokeOpacity: 1,
-        strokeWeight: 2,
-        fillColor: '#7CB8C8',
-        fillOpacity: 0.35,
-        map: map,
-        center: station.pos,
-        radius: Math.sqrt(station.depth) * 20
-    });
-}
+
 
 function highlightStationMenu(station) {
     $(".top-li .stations > li").each( function( index, element ){
