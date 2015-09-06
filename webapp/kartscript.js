@@ -44,12 +44,29 @@ function initMap() {
 }
 
 $('#trafficToggle').click(function() {
- 
+
     if (trafficLayer.getMap() == null) {
         trafficLayer.setMap(map);
     }
     else {
         trafficLayer.setMap(null);
+    }
+
+})
+
+$('#snowDepthToggle').click(function() {
+    console.log(stations[0].marker.visible);
+    if (stations[0].marker.visible) {
+        for (x in stations) {
+            stations[x].marker.setVisible(false);
+            stations[x].circles.setVisible(false);
+        }
+        var snowVisible = false;
+    } else {
+        for (x in stations) {
+            stations[x].marker.setVisible(true);
+            stations[x].circles.setVisible(true);
+        }
     }
 
 })
