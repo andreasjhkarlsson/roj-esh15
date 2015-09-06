@@ -9,6 +9,8 @@ var map;
 var focusMalmslatt = {lat: 58.407728, lng: 15.599847};
 var image = 'images/snowstick_sne_64px.png';
 
+
+
 function initMap() {
     $.get( "/api/all", function(teststations) {
         stations = teststations;
@@ -18,8 +20,8 @@ function initMap() {
             stations[i].depth = 30;
             stations[i].marker = createMarker(stations[i]);
             stations[i].info = createInfoWindow(stations[i]);
-            createTrafficCircles(stations[i]);
-            createDepthCircles(stations[i]);
+            stations[i].circle = createDepthCircle(stations[i]);
+            //createTrafficCircles(stations[i]);
             addHoverListener(stations[i]);
             //addClickListener(stations[i]);
             updateDepth(stations[i]);
@@ -48,6 +50,22 @@ function updateDepth(station){
     $.get("/api/depth?id="+station.id,function(sensorData){
         station.depth = roundFloat(sensorData.depth * 100.0, 1);
         station.info.setContent(createInfoWindowHTML(station));
+    });
+}
+
+function updateCircle(station){
+    $.get("/api/depth?id="+station.id,function(sensorData){
+        station.depth = roundFloat(sensorData.depth * 100.0, 1);
+        station.circles = new google.maps.Circle({
+            strokeColor: '#7CB8C8',
+            strokeOpacity: 1,
+            strokeWeight: 2,
+            fillColor: '#7CB8C8',
+            fillOpacity: 0.35,
+            map: map,
+            center: station.pos,
+            radius: Math.sqrt(station.depth) * 10
+        });
     });
 }
 
@@ -98,51 +116,36 @@ function createMarker(station){
     })
 }
 
-function createTrafficCircles(station){
+function createDepthCircle(station){
     new google.maps.Circle({
-        strokeColor: '#FF0000',
-        strokeOpacity: 0.8,
+        strokeColor: '#7CB8C8',
+        strokeOpacity: 1,
         strokeWeight: 2,
-        fillColor: '#FF0000',
+        fillColor: '#7CB8C8',
         fillOpacity: 0.35,
         map: map,
         center: station.pos,
-        radius: Math.sqrt(station.traffic) * 10
-    });
-}
-
-function createDepthCircles(station){
-    new google.maps.Circle({
-        strokeColor: '#0000FF',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: '#0000FF',
-        fillOpacity: 0.35,
-        map: map,
-        center: station.pos,
-        radius: Math.sqrt(station.depth) * 10
+        radius: Math.sqrt(station.depth) * 20
     });
 }
 
 function highlightStationMenu(station) {
     $(".top-li .stations > li").each( function( index, element ){
-
         //Ändrar bakgrundsfärg i menyn (för element med matchande id) då muspekaren hovrar över kartmarkör
         if ($(this).get(0).id == station.id) {
-            $(this).css("background-color", "#b2dfdb");
+            $(this).css("background-color", "#7CB8C8");
         }
     });
 }
 
 function resetStationMenu() {
     $(".top-li .stations > li").each(function (index, element) {
-
         //Sätter bakgrundsfärgen till vit för listelementen med stationsnamn i vänstermenyn (kallas då muspekaren lämnar markör på kartan)
         $(this).css("background-color", "#fff");
     });
 }
 
-
+//Bounce animation for map markers
 $(".stations").on('mouseenter','li', function () {
     var menuItemId = $(this).get(0).id - 1;
 

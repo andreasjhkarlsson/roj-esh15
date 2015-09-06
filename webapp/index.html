@@ -13,18 +13,17 @@
 
 <!-- Page Layout here -->
 <header>
-    <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="mdi-navigation-menu"></i></a></div>
-    <ul id="nav-mobile" class="side-nav fixed" style="width: 240px;">
+    <ul class="side-nav fixed" style="width: 240px;">
         <li class="logo"><img class="responsive-img" src="images/rojlogocropped.png"></li>
         <li class="no-padding">
             <ul class="collapsible">
-                <li class="bold top-li">Mätstationer
+                <li class="top-li"><a class="bold">Mätstationer</a>
                     <div class="collapsible-body stations" style="display: block;">
-                        <ul>
+                        <ul class="collapsible-body stations">
                         </ul>
                     </div>
                 </li>
-                <li class="bold top-li">Visa datalager
+                <li class="top-li"><a class="bold">Visa datalager</a>
                     <div class="collapsible-body" style="display: block;">
                         <ul>
                             <li><a href="#">Snödjup</a></li>
@@ -37,15 +36,11 @@
     </ul>
 </header>
     <main>
-        <div class="col s12 m8 l9 grey lighten-3" id="main">
-            <div id="map"></div>
-        </div>
-
-        <div class="col s12 m12 l12 z-depth-2" id="chart">
+        <div id="map"></div>
+        <div id="chart-holder">
             <div class="ct-chart ct-double-octave" id="chart1"></div>
         </div>
     </main>
-
 </div>
 
 <!--jQuery-->
