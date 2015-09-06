@@ -4,8 +4,6 @@
 
 //http://localhost:63342/webapp/index.html
 
-
-
 var stations;
 var map;
 var focusMalmslatt = {lat: 58.407728, lng: 15.599847};
@@ -25,10 +23,14 @@ function initMap() {
             addHoverListener(stations[i]);
             //addClickListener(stations[i]);
             updateDepth(stations[i]);
+
+            //Skapar DOM-element (<li>) i vänstermenyn med stationsnamn och stations-id
+            $(".top-li .stations").append("<li id="+stations[i].id+"><a class='station' href='#'>"+stations[i].name+"</a></li>");
         }
+
+
     });
 }
-
 
 function createInfoWindowHTML(station) {
     return '<div id="content">'+
@@ -36,7 +38,7 @@ function createInfoWindowHTML(station) {
         '</div>'+
         '<p>Station: ' + station.name + '</p>' +
         '<p>Snödjup: ' + station.depth + ' mm</p>' +
-        '<p>Traffik: ' + station.traffic + ' fordon/h</p>' +
+        '<p>Trafik: ' + station.traffic + ' fordon/h</p>' +
         '</div>'+
         '</div>';
     
@@ -57,9 +59,11 @@ function roundFloat(n,precision) {
 function addHoverListener(station){
     station.marker.addListener('mouseover', function(){
         station.info.open(map, station.marker);
+        highlightStationMenu(station);
     });
     station.marker.addListener('mouseout', function(){
         station.info.close(map, station.marker);
+        resetStationMenu();
     });
 }
 
@@ -120,4 +124,31 @@ function createDepthCircles(station){
     });
 }
 
+function highlightStationMenu(station) {
+    $(".top-li .stations > li").each( function( index, element ){
 
+        //Ändrar bakgrundsfärg i menyn (för element med matchande id) då muspekaren hovrar över kartmarkör
+        if ($(this).get(0).id == station.id) {
+            $(this).css("background-color", "#b2dfdb");
+        }
+    });
+}
+
+function resetStationMenu() {
+    $(".top-li .stations > li").each(function (index, element) {
+
+        //Sätter bakgrundsfärgen till vit för listelementen med stationsnamn i vänstermenyn (kallas då muspekaren lämnar markör på kartan)
+        $(this).css("background-color", "#fff");
+    });
+}
+
+
+$(".stations").on('mouseenter','li', function () {
+    var menuItemId = $(this).get(0).id - 1;
+
+    stations[menuItemId].marker.setAnimation(google.maps.Animation.BOUNCE);
+}).on('mouseleave', 'li', function () {
+    var menuItemId = $(this).get(0).id - 1;
+
+    stations[menuItemId].marker.setAnimation(google.maps.Animation.NULL);
+    });
