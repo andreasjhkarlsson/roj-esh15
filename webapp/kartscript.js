@@ -19,6 +19,8 @@ var image = 'images/snowstick_sne_64px.png';
 //    }, 1000);
 //});
 
+
+
 function initMap() {
     $.get( "/api/all", function(teststations) {
         stations = teststations;
@@ -127,7 +129,7 @@ function createInfoWindow(station){
     var contentString = createInfoWindowHTML(station);
     return new google.maps.InfoWindow({
         content: contentString,
-        maxWidth: 150
+        maxWidth: 100
     });
 }
 
