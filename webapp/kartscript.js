@@ -9,15 +9,18 @@ var map;
 var focusMalmslatt = {lat: 58.407728, lng: 15.599847};
 var image = 'images/snowstick_sne_64px.png';
 
-//$(document).ready(function(){
-//    setInterval(function(){
-//        for(var i = 0; i < stations.length; i++){
-//            updateDepth(stations[i]);
-//            updateCircle(stations[i]);
-//        }
-//
-//    }, 1000);
-//});
+$(document).ready(function(){
+    setInterval(function(){
+        for(var i = 0; i < stations.length; i++){
+            updateDepth(stations[i]);
+            updateCircle(stations[i]);
+        }
+
+    }, 1000);
+
+    $('.modal-trigger').leanModal();
+});
+
 
 var trafficLayer;
 
@@ -28,11 +31,11 @@ function initMap() {
         trafficLayer = new google.maps.TrafficLayer();
         for(var i = 0; i < stations.length; i++){
             updateDepth(stations[i]);
-            updateCircle(stations[i]);
+            createCircle(stations[i]);
             stations[i].marker = createMarker(stations[i]);
             stations[i].info = createInfoWindow(stations[i]);
             addHoverListener(stations[i]);
-            //addClickListener(stations[i]);
+            addClickListener(stations[i]);
 
 
             //Skapar DOM-element (<li>) i vänstermenyn med stationsnamn och stations-id
@@ -84,12 +87,16 @@ function createInfoWindowHTML(station) {
 
 function updateDepth(station){
     $.get("/api/depth?id="+station.id,function(sensorData){
-        station.depth = roundFloat(sensorData.depth * 100.0, 1);
+        station.depth = Math.abs(roundFloat(sensorData.depth * 1000.0, 1));
         station.info.setContent(createInfoWindowHTML(station));
     });
 }
 
 function updateCircle(station){
+    station.circles.setRadius(Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 5);
+}
+
+function createCircle(station){
     $.get("/api/depth?id="+station.id,function(sensorData){
         station.depth = roundFloat(sensorData.depth * 100.0, 1);
         station.circles = new google.maps.Circle({
@@ -100,7 +107,7 @@ function updateCircle(station){
             fillOpacity: 0.35,
             map: map,
             center: station.pos,
-            radius: Math.sqrt(station.depth) * Math.sqrt(station.depth) * 30
+            radius: Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 5
         });
     });
 }
@@ -121,16 +128,30 @@ function addHoverListener(station){
     });
 }
 
-//function addClickListener(station){
-//    station.marker.addListener('click', function(){
-//        station.info.open(map, station.marker);
-//    });
-//}
+function calibrateStation(id){
+    $.post("/api/calibrate?id=" + id);
+}
+
+
+
+
+function addClickListener(station){
+    station.marker.addListener('click', function(){
+        var html = '<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>';
+        html += '<div id="modal1" class="modal">';
+        html += '<div class="modal-content"><h5>Kalibrering</h5><p>Mätstationen omkalibreras och äldre värde förloras</p>';
+        html += '</div><div class="modal-footer">';
+        html += '<a href="#" onclick="calibrateStation(' + station.id + ')"  id="calibrate" class="modal-action modal-close waves-effect waves-green btn-flat">Acceptera</a>';
+        html += '</div></div>';
+        document.getElementById("modals").innerHTML = html;
+        $('#modal1').openModal();
+    });
+}
 
 function createMap(){
     map = new google.maps.Map(document.getElementById('map'), {
         center: focusMalmslatt,
-        zoom: 11,
+        zoom: 13,
         //Gömmer google maps UI
         disableDefaultUI: true
     });
@@ -140,7 +161,7 @@ function createInfoWindow(station){
     var contentString = createInfoWindowHTML(station);
     return new google.maps.InfoWindow({
         content: contentString,
-        maxWidth: 150
+        maxWidth: 100
     });
 }
 
