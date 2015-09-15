@@ -47,12 +47,29 @@ function initMap() {
 }
 
 $('#trafficToggle').click(function() {
- 
+
     if (trafficLayer.getMap() == null) {
         trafficLayer.setMap(map);
     }
     else {
         trafficLayer.setMap(null);
+    }
+
+})
+
+$('#snowDepthToggle').click(function() {
+    console.log(stations[0].marker.visible);
+    if (stations[0].marker.visible) {
+        for (x in stations) {
+            stations[x].marker.setVisible(false);
+            stations[x].circles.setVisible(false);
+        }
+        var snowVisible = false;
+    } else {
+        for (x in stations) {
+            stations[x].marker.setVisible(true);
+            stations[x].circles.setVisible(true);
+        }
     }
 
 })
@@ -76,7 +93,7 @@ function updateDepth(station){
 }
 
 function updateCircle(station){
-    station.circles.setRadius(Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 30);
+    station.circles.setRadius(Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 5);
 }
 
 function createCircle(station){
@@ -90,7 +107,7 @@ function createCircle(station){
             fillOpacity: 0.35,
             map: map,
             center: station.pos,
-            radius: Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 30
+            radius: Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 5
         });
     });
 }
