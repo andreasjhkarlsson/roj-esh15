@@ -93,7 +93,7 @@ function updateDepth(station){
 }
 
 function updateCircle(station){
-    station.circles.setRadius(Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 5);
+    station.circles.setRadius(Math.sqrt(Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 500));
 }
 
 function createCircle(station){
@@ -107,7 +107,7 @@ function createCircle(station){
             fillOpacity: 0.35,
             map: map,
             center: station.pos,
-            radius: Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 5
+            radius: Math.sqrt(Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 500)
         });
     });
 }
