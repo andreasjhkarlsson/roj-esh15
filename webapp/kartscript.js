@@ -70,7 +70,7 @@ function createInfoWindowHTML(station) {
 
 function updateDepth(station){
     $.get("/api/depth?id="+station.id,function(sensorData){
-        station.depth = Math.abs(roundFloat(sensorData.depth * 100.0, 1));
+        station.depth = Math.abs(roundFloat(sensorData.depth * 1000.0, 1));
         station.info.setContent(createInfoWindowHTML(station));
     });
 }
