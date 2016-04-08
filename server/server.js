@@ -117,7 +117,7 @@ app.post(apiPath("calibrate"),function(req,res){
         
         getCurrentDepth(ip,port,function(values) {
             
-            var meanValue = (values[0] + values[1]) / 2.0; 
+            var meanValue = (values[0] + values[1]) / 2.0;
                     
             db.run("UPDATE STATION SET REFERENCE_VALUE = ? WHERE ID = "+id,meanValue);
             

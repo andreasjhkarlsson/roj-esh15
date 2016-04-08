@@ -11,14 +11,14 @@ var port = parseInt(process.argv[process.argv.length-1]);
 
 var s1 = 0.0 // Sensor1
 var s2 = 0.0 // Sensor2
-var t = Math.random(); // Random start
+var t = Math.random() * 10000.0; // Random start
 
 setInterval(function() {
-    t += 0.1;
+    t += 10;
     var height = 3.0;
-    var depth = (((Math.sin(t/100000) + 1.0) / 2.0) * 5.0); // 0-5 cm
+    var depth = (((Math.sin(t/10000) + 1.0) / 2.0) * 5.0); // 0-5 cm
     s1 = height - depth;
-    s2 = height - depth + (Math.random() * 1.5); // Random variation by 0 - 1.5 cm
+    s2 = height - depth + (Math.random() / 2); // Random variation by 0.5 cm
 }, 10);
 
 var server = net.createServer(function(socket) {
