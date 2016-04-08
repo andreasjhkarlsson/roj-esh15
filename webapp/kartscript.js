@@ -79,7 +79,7 @@ function createInfoWindowHTML(station) {
         '<div id="siteNotice">'+
         '</div>'+
         '<p><i class="material-icons" style="float:right;">settings_remote</i>Station: ' + station.name + '</p>' +
-        '<p>Snödjup: ' + station.depth + ' mm </p>' +
+        '<p>Snödjup: ' + station.depth + ' cm </p>' +
         '</div>'+
         '</div>';
     
@@ -87,18 +87,18 @@ function createInfoWindowHTML(station) {
 
 function updateDepth(station){
     $.get("/api/depth?id="+station.id,function(sensorData){
-        station.depth = Math.abs(roundFloat(sensorData.depth * 1000.0, 1));
+        station.depth = Math.abs(roundFloat(sensorData.depth, 1));
         station.info.setContent(createInfoWindowHTML(station));
     });
 }
 
 function updateCircle(station){
-    station.circles.setRadius(Math.sqrt(Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 500));
+    station.circles.setRadius(Math.sqrt(Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 5000));
 }
 
 function createCircle(station){
     $.get("/api/depth?id="+station.id,function(sensorData){
-        station.depth = roundFloat(sensorData.depth * 100.0, 1);
+        station.depth = roundFloat(sensorData.depth, 1);
         station.circles = new google.maps.Circle({
             strokeColor: '#7CB8C8',
             strokeOpacity: 1,
@@ -107,7 +107,7 @@ function createCircle(station){
             fillOpacity: 0.35,
             map: map,
             center: station.pos,
-            radius: Math.sqrt(Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 500)
+            radius: Math.sqrt(Math.sqrt(Math.abs(station.depth)) * Math.sqrt(Math.abs(station.depth)) * 5000)
         });
     });
 }

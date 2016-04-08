@@ -89,10 +89,16 @@ header, main, footer {
 }
 
 .side-nav li:hover, .side-nav li.active {
-    background-color: inherit; }
+    background-color: inherit;
+    color:white;
+}
 
-.collapsible-body li:hover {
-    background-color: #7CB8C8!important;
+.side-nav li ul li a:hover {
+    color:white;
+}
+
+.collapsible-body li:hover{
+    background-color: #7CB8C8 !important;
 
 }
 #map{

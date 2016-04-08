@@ -4,7 +4,7 @@ var net = require('net');
 
 var sqlite3 = require('sqlite3').verbose();
 
-var db = new sqlite3.Database('roj.db');
+var db = new sqlite3.Database('../../server/MeterDB.db');
 
 var webappDir = "../webapp";
 
@@ -42,7 +42,7 @@ function sampleStation(dbStation,onDone) {
         var meanValue = (values[0] + values[1]) / 2.0;
         var snowDepth = dbStation.REFERENCE_VALUE - meanValue;
 
-        console.log(dbStation.NAME+" reported depth of "+(snowDepth*100.0)+ " cm");
+        console.log(dbStation.NAME+" reported depth of "+(snowDepth)+ " cm");
         var statement = db.prepare("INSERT INTO READING(STATION,TIMESTAMP,DEPTH) VALUES(?,CURRENT_TIMESTAMP ,?)");
         statement.run(dbStation.ID,snowDepth);
         statement.finalize();
